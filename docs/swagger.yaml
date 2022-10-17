@@ -1,0 +1,161 @@
+definitions:
+  dto.OrderItemRequest:
+    properties:
+      description:
+        type: string
+      itemCode:
+        type: string
+      quantity:
+        type: integer
+    type: object
+  dto.OrderItemResponse:
+    properties:
+      description:
+        type: string
+      id:
+        type: integer
+      itemCode:
+        type: string
+      quantity:
+        type: integer
+    type: object
+  dto.OrderRequest:
+    properties:
+      customerName:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/dto.OrderItemRequest'
+        type: array
+      orderedAt:
+        type: string
+    type: object
+  dto.OrderRequestUpdate:
+    properties:
+      customerName:
+        type: string
+      items:
+        items:
+          $ref: '#/definitions/dto.OrderItemResponse'
+        type: array
+      orderedAt:
+        type: string
+    type: object
+  dto.OrderResponse:
+    properties:
+      customerName:
+        type: string
+      id:
+        type: integer
+      items:
+        items:
+          $ref: '#/definitions/dto.OrderItemResponse'
+        type: array
+      orderedAt:
+        type: string
+    type: object
+info:
+  contact: {}
+paths:
+  /orders:
+    get:
+      description: Retrieve User's Order Data
+      operationId: get-all-order
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.OrderResponse'
+            type: array
+      tags:
+      - orders
+    post:
+      consumes:
+      - application/json
+      description: create Order Data
+      operationId: create-order
+      parameters:
+      - description: request body json
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.OrderRequest'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: Created
+          schema:
+            $ref: '#/definitions/dto.OrderResponse'
+      tags:
+      - orders
+  /orders/{orderId}:
+    delete:
+      consumes:
+      - application/json
+      description: Delete Order Data
+      operationId: delete-order
+      parameters:
+      - description: order's id
+        in: path
+        name: orderId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses: {}
+      tags:
+      - orders
+    get:
+      description: Retrieve User's Order Data
+      operationId: get-by-id-order
+      parameters:
+      - description: order's id
+        in: path
+        name: orderId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.OrderResponse'
+            type: array
+      tags:
+      - orders
+    put:
+      consumes:
+      - application/json
+      description: Retrieve User's Order Data
+      operationId: update-order
+      parameters:
+      - description: request body json
+        in: body
+        name: RequestBody
+        required: true
+        schema:
+          $ref: '#/definitions/dto.OrderRequestUpdate'
+      - description: order's id
+        in: path
+        name: orderId
+        required: true
+        type: integer
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            items:
+              $ref: '#/definitions/dto.OrderResponse'
+            type: array
+      tags:
+      - orders
+swagger: "2.0"

@@ -1,0 +1,247 @@
+{
+    "swagger": "2.0",
+    "info": {
+        "contact": {}
+    },
+    "paths": {
+        "/orders": {
+            "get": {
+                "description": "Retrieve User's Order Data",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "operationId": "get-all-order",
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.OrderResponse"
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "description": "create Order Data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "operationId": "create-order",
+                "parameters": [
+                    {
+                        "description": "request body json",
+                        "name": "RequestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.OrderRequest"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "Created",
+                        "schema": {
+                            "$ref": "#/definitions/dto.OrderResponse"
+                        }
+                    }
+                }
+            }
+        },
+        "/orders/{orderId}": {
+            "get": {
+                "description": "Retrieve User's Order Data",
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "operationId": "get-by-id-order",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "order's id",
+                        "name": "orderId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.OrderResponse"
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "description": "Retrieve User's Order Data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "operationId": "update-order",
+                "parameters": [
+                    {
+                        "description": "request body json",
+                        "name": "RequestBody",
+                        "in": "body",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/dto.OrderRequestUpdate"
+                        }
+                    },
+                    {
+                        "type": "integer",
+                        "description": "order's id",
+                        "name": "orderId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "OK",
+                        "schema": {
+                            "type": "array",
+                            "items": {
+                                "$ref": "#/definitions/dto.OrderResponse"
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "description": "Delete Order Data",
+                "consumes": [
+                    "application/json"
+                ],
+                "produces": [
+                    "application/json"
+                ],
+                "tags": [
+                    "orders"
+                ],
+                "operationId": "delete-order",
+                "parameters": [
+                    {
+                        "type": "integer",
+                        "description": "order's id",
+                        "name": "orderId",
+                        "in": "path",
+                        "required": true
+                    }
+                ],
+                "responses": {}
+            }
+        }
+    },
+    "definitions": {
+        "dto.OrderItemRequest": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "itemCode": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.OrderItemResponse": {
+            "type": "object",
+            "properties": {
+                "description": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "itemCode": {
+                    "type": "string"
+                },
+                "quantity": {
+                    "type": "integer"
+                }
+            }
+        },
+        "dto.OrderRequest": {
+            "type": "object",
+            "properties": {
+                "customerName": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.OrderItemRequest"
+                    }
+                },
+                "orderedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.OrderRequestUpdate": {
+            "type": "object",
+            "properties": {
+                "customerName": {
+                    "type": "string"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.OrderItemResponse"
+                    }
+                },
+                "orderedAt": {
+                    "type": "string"
+                }
+            }
+        },
+        "dto.OrderResponse": {
+            "type": "object",
+            "properties": {
+                "customerName": {
+                    "type": "string"
+                },
+                "id": {
+                    "type": "integer"
+                },
+                "items": {
+                    "type": "array",
+                    "items": {
+                        "$ref": "#/definitions/dto.OrderItemResponse"
+                    }
+                },
+                "orderedAt": {
+                    "type": "string"
+                }
+            }
+        }
+    }
+}
